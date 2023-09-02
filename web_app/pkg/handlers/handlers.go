@@ -3,7 +3,7 @@ package handlers
 import (
 	"net/http"
 
-	"github.com/cpwu/golang/web_app/render"
+	"github.com/cpwu/golang/web_app/pkg/render"
 )
 
 // Home is the home page handler.

@@ -1,64 +1,72 @@
 package render
 
 import (
-	"fmt"
+	"bytes"
 	"html/template"
 	"log"
 	"net/http"
+	"path/filepath"
 )
 
 // RenderTemplate renders tempates using html/template
-func RenderTemplateTest(w http.ResponseWriter, tmpl string) {
-	parsedTemplate, _ := template.ParseFiles("./templates/"+tmpl, "./templates/base.layout.tmpl")
-	err := parsedTemplate.Execute(w, nil)
+func RenderTemplate(w http.ResponseWriter, tmpl string) {
+	// Create a template cache
+	templateCache, err := CreateTemplateCache()
 	if err != nil {
-		fmt.Println("Error parsing template: ", err)
-		return
-	}
-}
-
-var templateCache = make(map[string]*template.Template)
-
-func RenderTemplate(w http.ResponseWriter, t string) {
-	var tmpl *template.Template
-	var err error
-
-	// Check to see if we already have the template
-	_, inMap := templateCache[t]
-	if !inMap {
-		// Need to create the template
-		log.Println("Creating template and adding to cache...")
-		err = createTemplateCache(t)
-		if err != nil {
-			log.Println(err)
-		}
-	} else {
-		//
-		log.Println("Using the cached template.")
+		log.Fatal(err)
 	}
 
-	tmpl = templateCache[t]
+	// Get requested template from cache
+	t, ok := templateCache[tmpl]
+	if !ok {
+		log.Fatal(err)
+	}
 
-	err = tmpl.Execute(w, nil)
+	buf := new(bytes.Buffer)
+
+	err = t.Execute(buf, nil)
+	if err != nil {
+		log.Println(err)
+	}
+
+	// Render the template
+	_, err = buf.WriteTo(w)
 	if err != nil {
 		log.Println(err)
 	}
 }
 
-func createTemplateCache(t string) error {
-	templates := []string{
-		fmt.Sprintf("./templates/%s", t),
-		"./templates/base.layout.tmpl",
-	}
+func CreateTemplateCache() (map[string]*template.Template, error) {
+	myCache := map[string]*template.Template{}
 
-	// Parse the templates
-	tmpl, err := template.ParseFiles(templates...)
+	// Get all of the files named *.page.tmpl from ./templates
+	pages, err := filepath.Glob("./templates/*.page.tmpl")
 	if err != nil {
-		return err
+		return myCache, err
 	}
 
-	// Add template to cache(map)
-	templateCache[t] = tmpl
+	// Range through all files ending with *.page.tmpl
+	for _, page := range pages {
+		name := filepath.Base(page)
+		templateSet, err := template.New(name).ParseFiles(page)
+		if err != nil {
+			return myCache, err
+		}
 
-	return nil
+		matches, err := filepath.Glob("./templates/*.layout.tmpl")
+		if err != nil {
+			return myCache, err
+		}
+
+		if len(matches) > 0 {
+			templateSet, err = templateSet.ParseGlob("./templates/*.layout.tmpl")
+			if err != nil {
+				return myCache, err
+			}
+		}
+
+		myCache[name] = templateSet
+	}
+
+	return myCache, nil
 }

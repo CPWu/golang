@@ -18,3 +18,6 @@
 - Enable Go modules
 - Rearrange files to support Go modules
 - Using templates from a layout and pass data
+- Built a simple template cache
+- Revising the simple template cache to be more advanced
+- Application wide configuration

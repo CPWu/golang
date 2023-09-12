@@ -6,25 +6,38 @@ import (
 	"log"
 	"net/http"
 	"path/filepath"
+
+	"github.com/cpwu/golang/web_app/config"
 )
+
+var functions = template.FuncMap{}
+
+var app *config.AppConfig
+
+// NewTemplates sets the config the template package
+func NewTemplates(a *config.AppConfig) {
+	app = a
+}
 
 // RenderTemplate renders tempates using html/template
 func RenderTemplate(w http.ResponseWriter, tmpl string) {
-	// Create a template cache
-	templateCache, err := CreateTemplateCache()
-	if err != nil {
-		log.Fatal(err)
+	var templateCache map[string]*template.Template
+	if app.UseCache {
+		// get the template cache from the app config
+		templateCache := app.TemplateCache
+	} else {
+		templateCache, _ = CreateTemplateCache()
 	}
 
 	// Get requested template from cache
 	t, ok := templateCache[tmpl]
 	if !ok {
-		log.Fatal(err)
+		log.Fatal("Could not get template from template cache.")
 	}
 
 	buf := new(bytes.Buffer)
 
-	err = t.Execute(buf, nil)
+	err := t.Execute(buf, nil)
 	if err != nil {
 		log.Println(err)
 	}

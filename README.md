@@ -21,3 +21,4 @@
 - Built a simple template cache
 - Revising the simple template cache to be more advanced
 - Application wide configuration
+

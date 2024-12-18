@@ -2,6 +2,11 @@ package main
 
 import "testing"
 
+// Run `go test -cover for Test Coverage`
+// OR
+// `go test -coverprofile=coverage.out && go tool cover -html=coverage.out`
+// Table Tests
+// tests is equivalent to slice of structs, each struct defines a test case to run.
 var tests = []struct {
 	name     string
 	dividend float32
@@ -14,7 +19,10 @@ var tests = []struct {
 	{"expect-five", 50.0, 10.0, 5.0, false},
 }
 
+// To write a test in go, you need to give it a name and it has to start with the word test.
+// Run tests by running `go test` or `go test -v`
 func TestDivision(t *testing.T) {
+	// Range over test variable
 	for _, tt := range tests {
 		got, err := divide(tt.dividend, tt.divisor)
 		if tt.isErr {

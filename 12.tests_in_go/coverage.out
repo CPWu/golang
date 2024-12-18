@@ -1,0 +1,7 @@
+mode: set
+github.com/cpwu/golang/tests_in_go/main.go:12.13,14.16 2 0
+github.com/cpwu/golang/tests_in_go/main.go:14.16,17.3 2 0
+github.com/cpwu/golang/tests_in_go/main.go:19.2,19.51 1 0
+github.com/cpwu/golang/tests_in_go/main.go:22.44,26.12 2 1
+github.com/cpwu/golang/tests_in_go/main.go:26.12,28.3 1 1
+github.com/cpwu/golang/tests_in_go/main.go:30.2,31.20 2 1

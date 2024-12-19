@@ -8,7 +8,7 @@ import (
 )
 
 // Concepts
-// Enable go modules + reorganize for go modules + templates from layout + passing data.
+// Layouts
 
 // Global port number for web server
 const portNumber string = ":8080"

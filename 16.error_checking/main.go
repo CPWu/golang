@@ -32,7 +32,7 @@ func Divide(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	fmt.Fprintf(w, fmt.Sprintf("%f divided by %f is %f", 100.0, 0.0, f))
+	fmt.Fprintf(w, "%s", fmt.Sprintf("%f divided by %f is %f", 100.0, 0.0, f))
 }
 
 func divideValues(x, y float32) (float32, error) {

@@ -7,9 +7,9 @@ import (
 	"time"
 
 	"github.com/alexedwards/scs/v2"
-	"github.com/cpwu/golang/pkg/config"
-	"github.com/cpwu/golang/pkg/handlers"
-	"github.com/cpwu/golang/pkg/render"
+	"github.com/cpwu/bookings/pkg/config"
+	"github.com/cpwu/bookings/pkg/handlers"
+	"github.com/cpwu/bookings/pkg/render"
 )
 
 // Concepts

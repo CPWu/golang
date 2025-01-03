@@ -3,8 +3,8 @@ package main
 import (
 	"net/http"
 
-	"github.com/cpwu/golang/pkg/config"
-	"github.com/cpwu/golang/pkg/handlers"
+	"github.com/cpwu/bookings/pkg/config"
+	"github.com/cpwu/bookings/pkg/handlers"
 	"github.com/go-chi/chi"
 	"github.com/go-chi/chi/middleware"
 )
@@ -21,5 +21,8 @@ func routes(app *config.AppConfig) http.Handler {
 
 	mux.Get("/", handlers.Repo.Home)
 	mux.Get("/about", handlers.Repo.About)
+
+	fileServer := http.FileServer(http.Dir("./static/"))
+	mux.Handle("/static/*", http.StripPrefix("/static", fileServer))
 	return mux
 }

@@ -8,8 +8,8 @@ import (
 	"net/http"
 	"path/filepath"
 
-	"github.com/cpwu/golang/pkg/config"
-	"github.com/cpwu/golang/pkg/models"
+	"github.com/cpwu/bookings/pkg/config"
+	"github.com/cpwu/bookings/pkg/models"
 )
 
 var app *config.AppConfig

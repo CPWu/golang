@@ -3,9 +3,9 @@ package handlers
 import (
 	"net/http"
 
-	"github.com/cpwu/golang/pkg/config"
-	"github.com/cpwu/golang/pkg/models"
-	"github.com/cpwu/golang/pkg/render"
+	"github.com/cpwu/bookings/pkg/config"
+	"github.com/cpwu/bookings/pkg/models"
+	"github.com/cpwu/bookings/pkg/render"
 )
 
 // Repository the repository used by the handlers
